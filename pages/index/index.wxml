@@ -1,0 +1,65 @@
+<!--index.wxml-->
+<view>
+  <!-- 头部 -->
+  <view class="header">
+    <view class="header-left">Seven</view>
+    <view class="header-right">
+      <view class="iconfont icon-yonghu"></view>
+      <button wx:if="{{!hasUserInfo && canIUse}}" plain="{{true}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="login">点击登陆</button>
+      <text wx:else>{{ userInfo.nickName }}</text>
+    </view>
+  </view>
+  <view class="kv ac">
+    <text class="kv-t1">自制「美肤特调」 赢新罗独家好礼</text>
+    <view class="kv-t2">My Clarins全新上线新罗免税店 </view>
+    <!-- <cover-image src="/assets/images/header/fv1.jpg" /> -->
+  </view>
+  <!-- 轮播图 -->
+  <movable-area class="move-area">
+    <view class="swiper">
+      <view class="iconfont icon-arrow-left" data-current="left" bindtap="changeCurrent"></view>
+      <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" circular="{{circular}}" vertical="{{vertical}}" circular="true" interval="{{interval}}" duration="{{duration}}" previous-margin="{{previousMargin}}px" next-margin="{{nextMargin}}px" bindchange="bindchange" current="{{current}}">
+        <swiper-item wx:for="{{swiperList}}" wx:key="{{allIndex}}" wx:for-index="allIndex" wx:for-item="allItem">
+          <view class="swiper-item swiper-box{{allIndex}}" wx:if="{{!allItem.show}}">
+            <view class="image" wx:for="{{allItem.list}}" wx:for-index="index" wx:key="{{index}}">
+              <image mode="widthFix" src="{{item.url}}.png" class="swiper-item{{item.id}}" />
+              <image mode="widthFix" src="{{item.url}}_ac.png" class="{{item.show ? 'active' : ''}}" />
+            </view>
+          </view>
+          <image class="fullImage {{allItem.show ? 'active' : ''}}" mode="widthFix" src="{{allItem.fullImage}}" />
+        </swiper-item>
+      </swiper>
+      <view class="iconfont icon-arrow-right" data-current="right" bindtap="changeCurrent"></view>
+    </view>
+    <!-- 提示 -->
+    <view class="notify">
+      <view class="box ac">
+        <view>提示</view>
+        <view>TA可以为肌肤补水、注入营养、抵御污染、</view>
+        <view>焕活和提亮肌肤哦!</view>
+      </view>
+      <view class="notify-two">
+        挑选3-5种植物和水果
+        <text>拖至上方</text>阴影里，开始调制吧！
+      </view>
+
+      <!-- 选择列表 -->
+      <view class="select-area">
+        <view class="select-li" wx:for="{{selectList}}" wx:key="index">
+          <view>
+            <view>
+              <image src="{{item.url}}"></image>
+            </view>
+            <movable-view id="movable{{index}}" x="{{item.x}}" y="{{item.y}}" direction="all" wx:if="{{item.show}}" data-index="{{index}}" catchtouchend="touchEnd">
+              <image src="{{item.url}}"></image>
+            </movable-view>
+          </view>
+          <view class="txt">{{item.txt}}</view>
+          <view class="txt2">{{item.txt2}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- <movable-view x="{{x}}" y="{{y}}" direction="all">text</movable-view> -->
+  </movable-area>
+</view>
